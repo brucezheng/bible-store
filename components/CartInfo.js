@@ -1,19 +1,25 @@
 import Link from 'next/link'
 import { useContext } from 'react';
 import { CartContext } from '../providers/CartProvider'
+import CartRow from './CartRow'
 import styles from '../styles/Home.module.css'
+import { calculateTotal, formatCurrency } from './Utils'
 
 export default function CartInfo() {
     const cart = useContext(CartContext);
-    const onClickHandler = () => {
-      cart.dispatch({type: 'clear'})
-    }
+    const cartList = Object.entries(cart.state.cartItems)
+      .filter((cartItem) => cartItem[1] > 0)
+      .map((cartItem) => {
+        const [id, count] = cartItem;
+        return (<CartRow id={id} count={count} />);
+      });
+      const subtotal = formatCurrency(calculateTotal(cart.state.cartItems));
   	return (
-        <p className={styles.description}>
-          You have {cart.state.count} items in cart.
-          <button onClick = {onClickHandler}>
-          Clear cart
-          </button>
-        </p>
+        <div className={styles.cartInfo}>
+          {cartList}
+          <div className={styles.cartSubtotal}>
+            <h3>Subtotal: {subtotal}</h3>
+          </div>
+        </div>
   	)
 }

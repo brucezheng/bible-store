@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CartProvider } from '../providers/CartProvider'
 import CartInfo from '../components/CartInfo'
+import ClearCartButton from '../components/ClearCartButton'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
             Cart
           </h1>
 
-          <CartInfo />
+          <CartInfo /> 
 
           <div className={styles.grid}>
             <Link href="/checkout">
