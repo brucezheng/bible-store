@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+function Summary(props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,7 +17,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Order number: 123
+          Order number: {props.orderId}
         </p>
         <p className={styles.description}>
           Order total: $0.50
@@ -26,3 +26,15 @@ export default function Home() {
     </div>
   )
 }
+
+// This gets called on every request
+export async function getServerSideProps({ query }) {
+
+  return {
+    props: {
+      orderId: query.orderId
+    }
+  };
+}
+
+export default Summary;

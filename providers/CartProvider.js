@@ -1,25 +1,35 @@
-import React, { Context, createContext, useReducer, useEffect } from 'react';
+import React, { Context, createContext, useReducer, useEffect, useContext } from 'react';
+import { decodeCartItems, encodeCartItems } from '../components/Utils'
 
 const CartContext = React.createContext({});
 
-const initialState = {cartItems: {}, count: 0};
+const initialState = {encodedCartItems: '', count: 0};
+
+function getCartItems() {
+    const cartContext = useContext(CartContext);
+    return decodeCartItems(cartContext.state.encodedCartItems || '');
+}
+
+function getEncodedCartItems() {
+    const cartContext = useContext(CartContext);
+    return cartContext.state.encodedCartItems;
+}
 
 function addItem(state, action) {
 	const addItemId = action.itemId;
-	const cartItems = state.cartItems || {};
-	let newCartItems = JSON.parse(JSON.stringify(cartItems));
-	const cartItemCount = newCartItems[addItemId] || 0;
-	newCartItems[addItemId] = cartItemCount + 1;
-	return {cartItems: newCartItems, count: state.count + 1};
+	const cartItems = decodeCartItems(state.encodedCartItems || '');
+	cartItems[addItemId] = (cartItems[addItemId] || 0) + 1;
+	console.log(encodeCartItems(cartItems));
+	return {encodedCartItems: encodeCartItems(cartItems), count: state.count + 1};
 }
 
 function removeItem(state, action) {
 	const clearItemId = action.itemId;
-	const cartItems = state.cartItems || {};
-	let newCartItems = JSON.parse(JSON.stringify(cartItems));
-	const newCount = state.count - (newCartItems[clearItemId] || 0);
-	newCartItems[clearItemId] = 0;
-	return {cartItems: newCartItems, count: newCount};
+	const cartItems = decodeCartItems(state.encodedCartItems || '');
+	const newCount = state.count - (cartItems[clearItemId] || 0);
+	cartItems[clearItemId] = 0;
+	console.log(encodeCartItems(cartItems));
+	return {encodedCartItems: encodeCartItems(cartItems), count: newCount};
 }
 
 function reducer(state, action) {
@@ -31,7 +41,7 @@ function reducer(state, action) {
 		case 'remove':
 			return removeItem(state, action);
 		case 'clearAll':
-			return {cartItems: {}, count: 0};
+			return {encodedCartItems: '', count: 0};
 		default:
 			throw new Error();
 	}
@@ -68,4 +78,4 @@ const CartProvider = ({children}) => {
 	)
 }
 
-export { CartContext, CartProvider };
+export { CartContext, CartProvider, getCartItems, getEncodedCartItems };

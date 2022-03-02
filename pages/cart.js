@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CartProvider } from '../providers/CartProvider'
+import CheckoutLink from '../components/CheckoutLink'
 import CartInfo from '../components/CartInfo'
 import ClearCartButton from '../components/ClearCartButton'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Cart() {
   return (
     <CartProvider>
       <div className={styles.container}>
@@ -21,12 +22,11 @@ export default function Home() {
             Cart
           </h1>
 
-          <CartInfo /> 
+          <CartInfo />
+          <ClearCartButton />
 
           <div className={styles.grid}>
-            <Link href="/checkout">
-              <a className={styles.card}>Checkout</a>
-            </Link>
+            <CheckoutLink />
           </div>
         </main>
       </div>

@@ -164,6 +164,11 @@
   margin-left: 0.5rem;
 }
 
+.checkoutForm {
+  width: 400px;
+  text-align:  center;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
