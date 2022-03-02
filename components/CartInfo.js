@@ -11,13 +11,13 @@ export default function CartInfo() {
       .filter((cartItem) => cartItem[1] > 0)
       .map((cartItem) => {
         const [id, count] = cartItem;
-        return (<CartRow id={id} count={count} />);
+        return (<CartRow key={id} id={id} count={count} />);
       });
       const subtotal = formatCurrency(calculateTotal(cart.state.cartItems));
   	return (
         <div className={styles.cartInfo}>
           {cartList}
-          <div className={styles.cartSubtotal}>
+          <div className={styles.cartSubtotal}>z
             <h3>Subtotal: {subtotal}</h3>
           </div>
         </div>
