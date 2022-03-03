@@ -10,7 +10,7 @@ export default function InstructionsInput(props) {
 		<div className={styles.instructionsInput}>
 			<h3>Special Instructions</h3>
 			<div className={styles.instructionsInputLine}>
-			    <textarea name="instructions" onChange={handleChange} maxlength="150" />
+			    <textarea name="instructions" onChange={handleChange} maxLength="150" />
 		    </div>
 		</div>
 	);
