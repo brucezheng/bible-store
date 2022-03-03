@@ -25,13 +25,15 @@ export default function AddressInput(props) {
 				<label htmlFor="address">Address</label>
 			    <input name="address" onChange={handleChange} />
 		    </div>
-			<div className={styles.addressLine}>
-				<label htmlFor="city">City</label>
-			    <input name="city" onChange={handleChange} />
-		    </div>
-			<div className={styles.addressLine}>
-				<label htmlFor="zip">Zip</label>
-			    <input name="zip" onChange={handleChange} />
+			<div className={styles.doubleAddressLine}>
+				<div className={styles.addressLine}>
+					<label htmlFor="city">City</label>
+				    <input name="city" onChange={handleChange} />
+			    </div>
+				<div className={styles.addressLine}>
+					<label htmlFor="zip">Zip</label>
+				    <input name="zip" onChange={handleChange} />
+			    </div>
 		    </div>
 		</div>
 	);

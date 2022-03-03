@@ -18,12 +18,12 @@ function formatCurrency(num) {
 	}).format(num);
 }
 
-function encodeAddress(address) {
+function encodeString(address) {
 	return btoa(address);
 }
 
-function decodeAddress(encodedAddress) {
-	return atob(encodedAddress);
+function decodeString(encodedString) {
+	return encodedString ? atob(encodedString) : null;
 }
 
 function encodeCartItems(cartItems) {
@@ -53,4 +53,4 @@ function generateOrderId() {
 	return uuidv4();
 }
 
-export { productCatalog, calculateTotal, formatCurrency, encodeCartItems, decodeCartItems, generateOrderId, encodeAddress, decodeAddress };
+export { productCatalog, calculateTotal, formatCurrency, encodeCartItems, decodeCartItems, generateOrderId, encodeString, decodeString };

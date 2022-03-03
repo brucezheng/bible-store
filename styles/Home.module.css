@@ -169,19 +169,33 @@
   text-align:  center;
 }
 
-.addressInput {
+.addressInput,
+.instructionsInput {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-bottom: 1rem;
 }
 
-.addressLine {
+.doubleAddressLine {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.addressLine,
+.instructionsInputLine {
   width: 100%;
   padding: 0.2rem 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-right: 10px;
+}
+
+.addressLine:last-of-type {
+  margin-right: 0px;
 }
 
 .addressLine label {
@@ -192,7 +206,8 @@
   margin-bottom: 4px;
 }
 
-.addressLine input {
+.addressLine input,
+.instructionsInputLine textarea {
   width: 100%;
   border: solid 1px rgb(230,230,230);
   border-radius: 5px;

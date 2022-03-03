@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
 import AddressInput from './AddressInput'
+import InstructionsInput from './InstructionsInput'
 import { CartContext } from '../providers/CartProvider'
-import { generateOrderId, encodeAddress } from '../utils/Utils'
+import { generateOrderId, encodeString } from '../utils/Utils'
 import styles from '../styles/Home.module.css'
 
 export default function CheckoutForm(props) {
@@ -11,21 +12,28 @@ export default function CheckoutForm(props) {
   const elements = useElements();
   let billingAddress;
   let mailingAddress;
+  let instructions;
   const onBillingAddressChange = (newAddress) => {
   	billingAddress = newAddress;
   }
   const onMailingAddressChange = (newAddress) => {
   	mailingAddress = newAddress;
   }
+  const onInstructionsChange = (newInstructions) => {
+  	instructions = newInstructions;
+  }
 	const saveOrderInfo = async (orderInfo) => {
 			let saveOrderRequest = 
 					`/api/save?orderId=${orderInfo.id}&paymentId=${props.paymentId}&`
 							+ `encodedCartItems=${props.encodedCartItems}&cartTotalCents=${props.cartTotalCents}`
 			if (billingAddress) {
-				saveOrderRequest = saveOrderRequest + `&encodedBillingAddress=${encodeAddress(billingAddress)}`;
+				saveOrderRequest = saveOrderRequest + `&encodedBillingAddress=${encodeString(billingAddress)}`;
 			}
 			if (mailingAddress) {
-				saveOrderRequest = saveOrderRequest + `&encodedMailingAddress=${encodeAddress(mailingAddress)}`;
+				saveOrderRequest = saveOrderRequest + `&encodedMailingAddress=${encodeString(mailingAddress)}`;
+			}
+			if (instructions) {
+				saveOrderRequest = saveOrderRequest + `&encodedInstructions=${encodeString(instructions)}`;
 			}
       const saveOrderResponse = await fetch(saveOrderRequest);
       const responseData = await saveOrderResponse.json();
@@ -63,6 +71,7 @@ export default function CheckoutForm(props) {
   };
   return (
     <form className={styles.checkoutForm} onSubmit={handleSubmit}>
+    	<InstructionsInput onChange={onInstructionsChange} />
     	<AddressInput name='Mailing Address' onAddressChange={onMailingAddressChange} />
     	<AddressInput name='Billing Address' onAddressChange={onBillingAddressChange} />
       <PaymentElement />

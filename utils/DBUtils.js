@@ -1,15 +1,14 @@
 import prisma from './PrismaUtils';
-import { decodeAddress } from './Utils'
+import { decodeString } from './Utils'
 
 async function saveOrder(data) {
 	console.log('saving', 'id', data.orderId,
 			'payment', data.paymentId,
 			'encodedItems', data.encodedCartItems,
 			'cartTotalCents', data.cartTotalCents)
-	const billingAddress = data.encodedBillingAddress ?
-		decodeAddress(data.encodedBillingAddress) : null;
-	const mailingAddress = data.encodedMailingAddress ?
-		decodeAddress(data.encodedMailingAddress) : null;
+	const billingAddress = decodeString(data.encodedBillingAddress);
+	const mailingAddress = decodeString(data.encodedMailingAddress);
+	const instructions = decodeString(data.encodedInstructions)
 	const order = await prisma.order.create({
 		data: {
 				orderId: data.orderId,
@@ -18,6 +17,7 @@ async function saveOrder(data) {
 				cartTotalCents: Number(data.cartTotalCents),
 				billingAddress,
 				mailingAddress,
+				instructions,
 			},
 		})
 	return true;
