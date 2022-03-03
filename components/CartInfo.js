@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import { useContext } from 'react';
 import { getCartItems } from '../providers/CartProvider'
 import CartRow from './CartRow'
 import styles from '../styles/Home.module.css'
-import { calculateTotal, formatCurrency } from './Utils'
+import { calculateTotal, formatCurrency } from '../utils/Utils'
 
 export default function CartInfo() {
     const cartItems = getCartItems();

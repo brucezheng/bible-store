@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Image from 'next/image'
 import { CartContext } from '../providers/CartProvider'
 import styles from '../styles/Home.module.css'
-import { formatCurrency } from './Utils'
+import { formatCurrency } from '../utils/Utils'
 
 export default function Product(props) {
     const cart = useContext(CartContext);

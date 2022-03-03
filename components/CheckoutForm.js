@@ -1,13 +1,36 @@
 import { useContext } from 'react';
 import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
+import AddressInput from './AddressInput'
 import { CartContext } from '../providers/CartProvider'
-import { generateOrderId } from '../components/Utils'
+import { generateOrderId, encodeAddress } from '../utils/Utils'
 import styles from '../styles/Home.module.css'
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
   const cart = useContext(CartContext);
   const stripe = useStripe();
   const elements = useElements();
+  let billingAddress;
+  let mailingAddress;
+  const onBillingAddressChange = (newAddress) => {
+  	billingAddress = newAddress;
+  }
+  const onMailingAddressChange = (newAddress) => {
+  	mailingAddress = newAddress;
+  }
+	const saveOrderInfo = async (orderInfo) => {
+			let saveOrderRequest = 
+					`/api/save?orderId=${orderInfo.id}&paymentId=${props.paymentId}&`
+							+ `encodedCartItems=${props.encodedCartItems}&cartTotalCents=${props.cartTotalCents}`
+			if (billingAddress) {
+				saveOrderRequest = saveOrderRequest + `&encodedBillingAddress=${encodeAddress(billingAddress)}`;
+			}
+			if (mailingAddress) {
+				saveOrderRequest = saveOrderRequest + `&encodedMailingAddress=${encodeAddress(mailingAddress)}`;
+			}
+      const saveOrderResponse = await fetch(saveOrderRequest);
+      const responseData = await saveOrderResponse.json();
+      return responseData.status;
+  };
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -19,10 +42,10 @@ export default function CheckoutForm() {
       return;
     }
 
-		cart.dispatch({type: 'clearAll'})
-		const return_url = process.env.NEXT_PUBLIC_HOST + '/summary?orderId=' + generateOrderId();
-		console.log(return_url);
-
+		const orderId = generateOrderId();
+		await saveOrderInfo({id: orderId});
+		cart.dispatch({type: 'clearAll'});
+		const return_url = process.env.NEXT_PUBLIC_HOST + '/summary?orderId=' + orderId;
     const result = await stripe.confirmPayment({
       //`Elements` instance that was used to create the Payment Element
       elements,
@@ -40,6 +63,8 @@ export default function CheckoutForm() {
   };
   return (
     <form className={styles.checkoutForm} onSubmit={handleSubmit}>
+    	<AddressInput name='Mailing Address' onAddressChange={onMailingAddressChange} />
+    	<AddressInput name='Billing Address' onAddressChange={onBillingAddressChange} />
       <PaymentElement />
       <button className={styles.button} disabled={!stripe}>Submit</button>
     </form>

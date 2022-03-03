@@ -3,12 +3,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import Stripe from 'stripe'
+import {Elements} from '@stripe/react-stripe-js'
 import CheckoutForm from '../components/CheckoutForm'
-import { getStripe } from '../components/StripeUtils'
 import { CartProvider } from '../providers/CartProvider'
 import styles from '../styles/Home.module.css'
-import {Elements} from '@stripe/react-stripe-js'
-import { decodeCartItems, formatCurrency, calculateTotal } from '../components/Utils'
+import { getStripe } from '../utils/StripeUtils'
+import { decodeCartItems, formatCurrency, calculateTotal } from '../utils/Utils'
 
 function Checkout(props) {
   const formattedCartTotal = formatCurrency(props.cartTotal);
@@ -34,7 +34,9 @@ function Checkout(props) {
               Your total is {formattedCartTotal}
             </p>
 
-            <CheckoutForm />
+            <CheckoutForm paymentId={props.paymentIntent.id}
+                encodedCartItems={props.encodedCartItems}
+                cartTotalCents={props.cartTotalCents}/>
 
             <div className={styles.grid}>
               <Link href="/summary">
@@ -61,6 +63,8 @@ export async function getServerSideProps({ query }) {
   return {
     props: {
       cartTotal,
+      cartTotalCents: cartTotal * 100,
+      encodedCartItems: query.cart,
       paymentIntent,
     }
   };

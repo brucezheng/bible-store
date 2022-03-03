@@ -1,5 +1,5 @@
 import React, { Context, createContext, useReducer, useEffect, useContext } from 'react';
-import { decodeCartItems, encodeCartItems } from '../components/Utils'
+import { decodeCartItems, encodeCartItems } from '../utils/Utils'
 
 const CartContext = React.createContext({});
 

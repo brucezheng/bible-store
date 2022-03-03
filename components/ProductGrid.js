@@ -1,5 +1,5 @@
-import { productCatalog } from './Utils'
 import Product from './Product'
+import { productCatalog } from '../utils/Utils'
 import styles from '../styles/Home.module.css'
 
 export default function ProductGrid(props) {

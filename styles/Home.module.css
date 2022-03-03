@@ -169,6 +169,36 @@
   text-align:  center;
 }
 
+.addressInput {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+}
+
+.addressLine {
+  width: 100%;
+  padding: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addressLine label {
+  font-family: "system-ui";
+  font-size: 15px;
+  font-weight: 400;
+  color: rgb(48, 49, 61);
+  margin-bottom: 4px;
+}
+
+.addressLine input {
+  width: 100%;
+  border: solid 1px rgb(230,230,230);
+  border-radius: 5px;
+  padding: 12px;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

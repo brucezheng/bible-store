@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { retrieveOrder } from '../utils/DBUtils'
+import { formatCurrency } from '../utils/Utils'
 
 function Summary(props) {
   return (
@@ -17,10 +19,8 @@ function Summary(props) {
         </h1>
 
         <p className={styles.description}>
-          Order number: {props.orderId}
-        </p>
-        <p className={styles.description}>
-          Order total: $0.50
+          <b>Order #:</b> {props.orderId} <br/>
+          <b>Order total:</b> {props.orderTotal}
         </p>
       </main>
     </div>
@@ -29,10 +29,11 @@ function Summary(props) {
 
 // This gets called on every request
 export async function getServerSideProps({ query }) {
-
+  const orderInfo = await retrieveOrder(query.orderId);
   return {
     props: {
-      orderId: query.orderId
+      orderId: query.orderId,
+      orderTotal: formatCurrency(orderInfo.total),
     }
   };
 }

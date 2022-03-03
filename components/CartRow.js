@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useContext } from 'react';
 import { CartContext } from '../providers/CartProvider'
 import styles from '../styles/Home.module.css'
-import { productCatalog } from './Utils'
+import { productCatalog } from '../utils/Utils'
 
 export default function CartInfo(props) {
     const cart = useContext(CartContext);
