@@ -22,7 +22,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Scripture at a great price!
+          <i>It is written, ‘My house shall be a house of prayer,’ <br/> but you have made it a den of robbers.</i>
         </p>
 
         <ProductGrid />

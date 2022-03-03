@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import { retrieveOrder } from '../utils/DBUtils'
 import { formatCurrency } from '../utils/Utils'
@@ -22,6 +22,12 @@ function Summary(props) {
           <b>Order #:</b> {props.orderId} <br/>
           <b>Order total:</b> {props.orderTotal}
         </p>
+
+        <div className={styles.grid}>
+          <Link href="/">
+            <a className={styles.card}>Back to Store</a>
+          </Link>
+        </div>
       </main>
     </div>
   )

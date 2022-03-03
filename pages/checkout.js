@@ -37,12 +37,6 @@ function Checkout(props) {
             <CheckoutForm paymentId={props.paymentIntent.id}
                 encodedCartItems={props.encodedCartItems}
                 cartTotalCents={props.cartTotalCents}/>
-
-            <div className={styles.grid}>
-              <Link href="/summary">
-                <a className={styles.card}>Pay</a>
-              </Link>
-            </div>
           </main>
         </div>
       </Elements>

@@ -23,7 +23,6 @@ export default function Cart() {
           </h1>
 
           <CartInfo />
-          <ClearCartButton />
 
           <div className={styles.grid}>
             <CheckoutLink />
