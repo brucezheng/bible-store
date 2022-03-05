@@ -135,7 +135,7 @@
 }
 
 .cartRow {
-  width: 550px;
+  width: min(100%, 550px);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -165,7 +165,7 @@
 }
 
 .checkoutForm {
-  width: 400px;
+  width: min(100%, 550px);
   text-align:  center;
 }
 
